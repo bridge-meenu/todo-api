@@ -34,6 +34,8 @@ module.exports.datastores = {
 
   default: {
 
+    // adapter: 'sails-mysql',
+    // url: 'mysql://myuser:mypass@localhost:3306/todo_sails',
     /***************************************************************************
     *                                                                          *
     * Want to use a different database during development?                     *
