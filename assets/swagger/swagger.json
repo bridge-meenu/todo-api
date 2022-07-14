@@ -1,0 +1,369 @@
+{
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "JWT": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "access_token",
+        "description": "JWT Authorization"
+      }
+    },
+    "schemas": {
+      "todo": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/todo-without-required-constraint"
+          }
+        ]
+      },
+      "todo-without-required-constraint": {
+        "type": "object",
+        "description": "Sails ORM Model **Todo**",
+        "properties": {
+          "id": {
+            "type": "string",
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "parameters": {
+      "ModelPKParam-todo": {
+        "in": "path",
+        "name": "_id",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "description": "The desired **Todo** record's primary key value"
+      }
+    }
+  },
+  "info": {
+    "title": "Swagger Json",
+    "description": "This is a generated swagger json for sails project",
+    "termsOfService": "http://example.com/terms",
+    "contact": {
+      "name": "Author",
+      "url": "http://example.com",
+      "email": "example@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "url": "/"
+  },
+  "openapi": "3.0.0",
+
+  "paths": {
+    "/api/v1/user/signup": {
+      "post": {
+        "summary": "User Signup",
+        "description": "This is for new user signup",
+
+        "tags": ["User"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "description": "Enter Full Name"
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "description": "Enter email"
+          },
+          {
+            "in": "query",
+            "name": "password",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Enter password"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested resource"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+
+    "/api/v1/user/login": {
+      "post": {
+        "summary": "User Login",
+        "description": "This is for authentication of user",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "email",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 50,
+              "example": "encrypt@gmail.com"
+            },
+            "description": "Enter email"
+          },
+          {
+            "in": "query",
+            "name": "password",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 200,
+              "example": "12312312"
+            },
+            "description": "Enter password"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested resource"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+   
+    "/api/v1/todo": {
+      "post": {
+        "summary": "Create Todo",
+        "description": "This is for new Todo",
+
+        "tags": ["Todo"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "task",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "description": "Task to do"
+          },
+          {
+            "in": "query",
+            "name": "due_date",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "columnType": "date",
+              "maxLength": 50
+            },
+            "description": "Enter due date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested resource"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/todos": {
+      "get": {
+        "summary": "Create Todo",
+        "description": "This is for new Todo",
+        "tags": ["Todo"],
+        "responses": {
+          "200": {
+            "description": "The requested resource"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/todo/{_id}": {
+      "get": {
+        "summary": "Get todo ",
+        "description": "Look up the **todo** record with the specified ID.",
+        "externalDocs": {
+          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-one",
+          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-one"
+        },
+        "tags": ["Todo"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ModelPKParam-todo"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Responds with a single **Todo** record as a JSON dictionary",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/todo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Response denoting **Todo** record with specified ID **NOT** found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update User",
+        "description": "Update an existing **User** record.",
+        "externalDocs": {
+          "url": "https://sailsjs.com/documentation/reference/blueprint-api/update",
+          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/update"
+        },
+        "tags": ["Todo"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ModelPKParam-todo"
+          },
+          {
+            "in": "query",
+            "name": "task",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "description": "Task to do"
+          },
+          {
+            "in": "query",
+            "name": "due_date",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "columnType": "date",
+              "maxLength": 50
+            },
+            "description": "Enter due date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Responds with the newly updated **Todo** record as a JSON dictionary",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/todo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation errors; details in JSON response"
+          },
+          "404": {
+            "description": "Cannot update, **User** record with specified ID **NOT** found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Todo (destroy)",
+        "description": "Delete the **Todo** record with the specified ID.",
+        "externalDocs": {
+          "url": "https://sailsjs.com/documentation/reference/blueprint-api/destroy",
+          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/destroy"
+        },
+        "tags": ["Todo"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ModelPKParam-todo"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Responds with a JSON dictionary representing the destroyed **User** instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cannot destroy, **User** record with specified ID **NOT** found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    }
+  }
+}
