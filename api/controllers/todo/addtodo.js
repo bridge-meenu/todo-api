@@ -34,17 +34,15 @@ module.exports = {
       responseType: "badRequest",
     },
   },
-  fn: async function (input, exits) {
+  fn: async function (input) {
     try {
       var newTodo = await Todo.create({
         task: input.task,
         due_date: input.due_date,
         status: input.status,
         user_id: this.req.me.id
-      });
-      return exits.success({
-        message: "todo added successfully",
-      });
+      }).fetch();
+      return { message: "successfully added",response: newTodo };    
     } catch (e) {
       console.log(e);
     }

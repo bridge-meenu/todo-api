@@ -43,7 +43,7 @@ module.exports = {
   },
   fn: async function ( input, exits) {
     try {
-      console.log(input)
+
         var newEmail = input.email.toLowerCase();
         var newUser = await User.create({
             name: input.name,
@@ -51,7 +51,9 @@ module.exports = {
             password: await UtilService.hasPassword(input.password),
           }).fetch();
 return exits.success({
-  message:`Account created for ${newUser.name} successfully` 
+  message: `Account created for ${newUser.name} successfully` ,
+  user: newUser
+ 
 })
             
     } catch (e) {

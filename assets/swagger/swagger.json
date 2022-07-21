@@ -157,7 +157,7 @@
         }
       }
     },
-   
+
     "/api/v1/todo": {
       "post": {
         "summary": "Create Todo",
@@ -266,9 +266,10 @@
           }
         ]
       },
+
       "put": {
-        "summary": "Update User",
-        "description": "Update an existing **User** record.",
+        "summary": "Update Todo",
+        "description": "Update an existing **Todo** record.",
         "externalDocs": {
           "url": "https://sailsjs.com/documentation/reference/blueprint-api/update",
           "description": "See https://sailsjs.com/documentation/reference/blueprint-api/update"
@@ -364,6 +365,75 @@
           }
         ]
       }
-    }
+    },
+    "/api/v1/user": {
+        "put": {
+          "summary": "Update User",
+          "description": "Update an existing **User** record.",
+          "externalDocs": {
+            "url": "https://sailsjs.com/documentation/reference/blueprint-api/update",
+            "description": "See https://sailsjs.com/documentation/reference/blueprint-api/update"
+          },
+          "tags": ["User"],
+          "parameters": [
+            {
+              "in": "query",
+              "name": "name",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "maxLength": 50
+              },
+              "description": "Enter Full Name"
+            },
+            {
+              "in": "query",
+              "name": "email",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "maxLength": 50
+              },
+              "description": "Enter email"
+            },
+            {
+              "in": "query",
+              "name": "image",
+              "schema": {
+                "type": "string"
+              },
+              "description": "select image"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Responds with the newly updated **User** record as a JSON dictionary",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Validation errors; details in JSON response"
+            },
+            "404": {
+              "description": "Cannot update, **User** record with specified ID **NOT** found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          },
+      
+          "security": [
+            {
+              "JWT": []
+            }
+          ]
+        }
+      }
+    
   }
 }
