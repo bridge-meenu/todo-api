@@ -42,7 +42,7 @@ module.exports = {
           due_date: input.due_date,
           status: input.status,
         });
-        console.log(updateTodo);
+
   
         return this.res.json(updateTodo);
       } catch (e) {

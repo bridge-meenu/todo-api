@@ -113,6 +113,10 @@
             "description": "Securely hashed representation of the user's login password.",
             "example": "2$28a8eabna301089103-13948134nad"
           },
+          "image": {
+            "type": "string",
+            "description": "profile picture for user."
+          },
           "todos": {
             "description": "Array of **todo**'s or array of FK's when creating / updating / not populated",
             "type": "array",
@@ -225,6 +229,92 @@
     }
   ],
   "paths": {
+    "/api/v1/user": {
+      "get": {
+        "summary": "Get User",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Signup",
+        "description": "Sign up for a new user.",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            },
+            "description": "The email address for the new account, e.g. username@example.com."
+          },
+          {
+            "in": "query",
+            "name": "image",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "profile picture for user."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "New user created successfully."
+                    },
+                    {
+                      "type": "string",
+                      "description": "The email address is invalid."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "409": {
+            "description": "The provided email address is already in use."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/api/v1/todo": {
       "post": {
         "summary": "AddTodo",
@@ -1023,7 +1113,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "example": "createdAt,updatedAt,id,name,email,password,todos"
+              "example": "createdAt,updatedAt,id,name,email,password,image,todos"
             },
             "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
           },
@@ -1033,7 +1123,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "example": "createdAt,updatedAt,id,name,email,password,todos"
+              "example": "createdAt,updatedAt,id,name,email,password,image,todos"
             },
             "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
           },
@@ -1092,7 +1182,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "example": "createdAt,updatedAt,id,name,email,password,todos"
+              "example": "createdAt,updatedAt,id,name,email,password,image,todos"
             },
             "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
           },
@@ -1102,7 +1192,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "example": "createdAt,updatedAt,id,name,email,password,todos"
+              "example": "createdAt,updatedAt,id,name,email,password,image,todos"
             },
             "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
           },
@@ -1209,6 +1299,15 @@
           },
           {
             "in": "query",
+            "name": "image",
+            "schema": {
+              "type": "string",
+              "description": "profile picture for user."
+            },
+            "description": "profile picture for user."
+          },
+          {
+            "in": "query",
             "name": "todos",
             "schema": {
               "description": "Array of **todo**'s or array of FK's when creating / updating / not populated",
@@ -1312,6 +1411,15 @@
               "example": "2$28a8eabna301089103-13948134nad"
             },
             "description": "Securely hashed representation of the user's login password."
+          },
+          {
+            "in": "query",
+            "name": "image",
+            "schema": {
+              "type": "string",
+              "description": "profile picture for user."
+            },
+            "description": "profile picture for user."
           },
           {
             "in": "query",
@@ -1968,7 +2076,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "example": "createdAt,updatedAt,id,name,email,password,todos"
+              "example": "createdAt,updatedAt,id,name,email,password,image,todos"
             },
             "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
           },
@@ -1978,7 +2086,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "example": "createdAt,updatedAt,id,name,email,password,todos"
+              "example": "createdAt,updatedAt,id,name,email,password,image,todos"
             },
             "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
           },
@@ -2081,7 +2189,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "example": "createdAt,updatedAt,id,name,email,password,todos"
+              "example": "createdAt,updatedAt,id,name,email,password,image,todos"
             },
             "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
           },
@@ -2091,7 +2199,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "example": "createdAt,updatedAt,id,name,email,password,todos"
+              "example": "createdAt,updatedAt,id,name,email,password,image,todos"
             },
             "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
           },
@@ -2446,7 +2554,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "example": "createdAt,updatedAt,id,name,email,password,todos"
+              "example": "createdAt,updatedAt,id,name,email,password,image,todos"
             },
             "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
           },
@@ -2456,7 +2564,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "example": "createdAt,updatedAt,id,name,email,password,todos"
+              "example": "createdAt,updatedAt,id,name,email,password,image,todos"
             },
             "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
           }

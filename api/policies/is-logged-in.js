@@ -15,7 +15,7 @@
   // or, if this is the last policy, the relevant action.
   // > For more about where `req.me` comes from, check out this app's
   // > custom hook (`api/hooks/custom/index.js`).
-  console.log(req);
+
   if (req.me) {
     return proceed();
   }

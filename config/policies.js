@@ -19,6 +19,8 @@ module.exports.policies = {
 
   // '*': true,
   'user/logout': 'is-logged-in',
+  'user/getuser': 'is-logged-in',
+  'user/updateuser': 'is-logged-in',
   'todo/addtodo': 'is-logged-in',
   'todo/gettodo': 'is-logged-in',
   'todo/getalltodos': 'is-logged-in',

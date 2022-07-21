@@ -34,6 +34,8 @@ module.exports.routes = {
   "POST /api/v1/user/signup": { action: "user/signup" },
   "POST /api/v1/user/logout": { action: "user/logout" },
   "POST /api/v1/user/login": { action: "user/login" },
+  "GET /api/v1/user": { action: "user/getuser" },
+  "PUT /api/v1/user": { action: "user/updateuser" },
   "POST /api/v1/todo": { action: "todo/addtodo" },
   "GET /api/v1/todo/:id": { action: "todo/gettodo" },
   "GET /api/v1/todos": { action: "todo/getalltodos" },

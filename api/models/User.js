@@ -25,6 +25,12 @@ module.exports = {
       protect: true,
       example: "2$28a8eabna301089103-13948134nad",
     },
+    image: {
+      type: "string",
+      required: false,
+      description:
+        "profile picture for user.",
+    },
     todos: {
       collection: "todo",
       via: "owner",
